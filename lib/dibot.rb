@@ -2,6 +2,7 @@ require 'dibot/client'
 require "dibot/commands"
 require "dibot/commands/echo"
 require "dibot/commands/java"
+require "dibot/commands/deploy"
 
 module Dibot
   def self.logger

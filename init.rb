@@ -7,7 +7,10 @@ require "bundler/setup"
 
 # third party
 require "tinder"
+require "yaml"
 require "logger"
+require 'capybara'
+require 'capybara/dsl'
 
 # own stuff
 require 'dibot'

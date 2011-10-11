@@ -1,11 +1,9 @@
 module Dibot
   class Commands::Java
-    PARSER = /java/i
-
-    def call(message)
-      return unless message[:body] =~ PARSER
+    def call(room, message)
+      return unless message[:body] =~ /java/i
       
-      "Java?? WTF!!"
+      room.speak "Java?? WTF!!"
     end
   end
 end

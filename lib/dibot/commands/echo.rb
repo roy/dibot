@@ -1,11 +1,9 @@
 module Dibot
   class Commands::Echo
-    PARSER = /echo/i
+    def call(room, message)
+      return unless message[:body] =~ /echo/i
 
-    def call(message)
-      return unless message[:body] =~ PARSER
-
-      "ECHO: #{message[:body].gsub(PARSER, "")}"
+      room.speak "ECHO:#{message[:body].gsub(/echo/i, "")}"
     end
   end
 end
