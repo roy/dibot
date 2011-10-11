@@ -5,7 +5,7 @@ module Dibot
 
       def register(command)
         @commands ||= []
-        @commands << command.new
+        @commands << command
       end
     end
   end

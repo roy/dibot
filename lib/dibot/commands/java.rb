@@ -10,4 +10,4 @@ module Dibot
   end
 end
 
-Dibot::Commands.register Dibot::Commands::Java
+Dibot::Commands.register Dibot::Commands::Java.new
