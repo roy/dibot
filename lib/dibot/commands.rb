@@ -3,9 +3,10 @@ module Dibot
     class << self
       attr_accessor :commands
 
-      def register(command)
+      def register(command = nil, &block)
         @commands ||= []
-        @commands << command
+        @commands << command if command
+        @commands << block if block
       end
     end
   end
