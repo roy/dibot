@@ -3,6 +3,8 @@ module Dibot
     PARSER = /echo/i
 
     def call(message)
+      return unless message[:body] =~ PARSER
+
       "ECHO: #{message[:body].gsub(PARSER, "")}"
     end
   end

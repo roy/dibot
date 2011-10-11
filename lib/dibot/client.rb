@@ -12,7 +12,7 @@ module Dibot
         next if message[:user][:name] == "dibot"
 
         Dibot::Commands.commands.each do |command|
-          @room.speak command.call(message) if message[:body] =~ command.class::PARSER
+          @room.speak command.call(message)
         end
       end
     end
