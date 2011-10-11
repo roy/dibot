@@ -9,33 +9,33 @@ require "optparse"
 options = {}
 help = nil
 OptionParser.new do |opts|
-	opts.banner = "Usage: dibot [options]"
+  opts.banner = "Usage: dibot [options]"
 
-	opts.on("-s", "--subdomain STRING", String, "Subdomain") do |s|
-		options[:subdomain] = s
-	end
+  opts.on("-s", "--subdomain STRING", String, "Subdomain") do |s|
+    options[:subdomain] = s
+  end
 
-	opts.on("-t", "--token STRING", String, "API Token form basecamp") do |t|
-		options[:token] = t
-	end
+  opts.on("-t", "--token STRING", String, "API Token form basecamp") do |t|
+    options[:token] = t
+  end
 
-	opts.on("-r", "--room STRING", String, "What room will I be chatting on (default: first)") do |r|
-		options[:room] = r
-	end
+  opts.on("-r", "--room STRING", String, "What room will I be chatting on (default: first)") do |r|
+    options[:room] = r
+  end
 
-	opts.on( '-h', '--help', 'Display this screen' ) do
-		puts opts
-		exit
-	end
+  opts.on( '-h', '--help', 'Display this screen' ) do
+    puts opts
+    exit
+  end
 
-	help = opts
+  help = opts
 end.parse!
 
 [:subdomain, :token].each do |required|
-	next unless options[required].nil?
-	puts "#{required.to_s} is required"
-	puts help
-	exit
+  next unless options[required].nil?
+  puts "#{required.to_s} is required"
+  puts help
+  exit
 end
 
 client = Dibot::Client.new(options[:subdomain], options[:token], options[:room])
