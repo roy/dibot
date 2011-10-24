@@ -6,7 +6,7 @@ module Dibot
       @campfire = Tinder::Campfire.new config["campfire"]["subdomain"], :token => config["campfire"]["token"]
       @room = @campfire.rooms.first
 
-      @room.speak "hello there"
+      @room.speak "Initializing..."
     end
 
     def run
