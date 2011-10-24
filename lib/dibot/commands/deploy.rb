@@ -1,7 +1,5 @@
 module Dibot
   class Commands::Deploy
-    include Capybara::DSL
-
     class << self
       attr_accessor :connection
 
@@ -10,12 +8,18 @@ module Dibot
       end
     end
 
-    attr_accessor :project
+    attr_accessor :project, :stage
 
     def match(body)
-      return unless body =~ /^dibot\sdeploy\s(.*)/
+      return unless body =~ /^dibot\sdeploy\s/
 
-      @project = $1
+      if body =~ /^dibot\sdeploy\s(.*)\sto\s(.*)/
+        @project = $1
+        @stage = $2.capitalize
+      elsif body =~ /^dibot\sdeploy\s(.*)/
+        @project = $1
+        @stage = "Production"
+      end
     end
 
     def call(room, message)
@@ -30,19 +34,16 @@ module Dibot
     end
 
     def deploy(project)
-      Capybara.run_server = true
-      Capybara.current_driver = :selenium
-      Capybara.app_host = connection["server"] 
+      WebistranoResource::Resource.site = connection["server"]
+      WebistranoResource::Resource.user = connection["user"]
+      WebistranoResource::Resource.password = connection["password"]
 
-      visit "/"
-      fill_in "login", :with => connection["user"]
-      fill_in "password", :with => connection["password"]
-      click_button "Log in"
-      
-      click_link project
-      click_link "Production"
-      click_link "Deploy"
-      click_button "Start deployment"
+      project = WebistranoResource::Project.find_by_name(project)
+      stage = project.find_stage_by_name("Production")
+
+      deployment = WebistranoResource::Deployment.new(:project_id => project.id, :stage_id => stage.id)
+      deployment.task = "deploy"
+      deployment.save
     end
   end
 end

@@ -1,23 +1,19 @@
 module Dibot
   class Client
-    def initialize(subdomain, token, room = nil)
-      config = YAML.load(File.open(File.expand_path("~/.dibot")))
+    def initialize(config)
+      Dibot::Commands::Deploy.establish_connection config["webistrano"]
 
-      @campfire = Tinder::Campfire.new subdomain, :token => token
+      @campfire = Tinder::Campfire.new config["campfire"]["subdomain"], :token => config["campfire"]["token"]
       @room = @campfire.rooms.first
 
-      Dibot::Commands::Deploy.establish_connection config["webistrano"]
+      @room.speak "hello there"
     end
 
     def run
-      @room.speak "hello there"
-
       @room.listen do |message|
         next if message[:user][:name] == "dibot"
 
-        Dibot::Commands.commands.each do |command|
-          command.call(@room, message)
-        end
+        Dibot::Commands.commands.each {|x| x.call(@room, message) } 
       end
     end
   end

@@ -26,6 +26,13 @@ describe Dibot::Commands::Deploy do
   it "should match dibot deploy project" do
     @command.match("dibot deploy athena")
     @command.project.should == "athena"
+    @command.stage.should == "Production"
+  end
+
+  it "should match dibot deploy project to stage" do
+    @command.match("dibot deploy alexandria to staging")
+    @command.project.should == "alexandria"
+    @command.stage.should == "Staging"
   end
 
   it "should deploy project" do

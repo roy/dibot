@@ -1,7 +1,8 @@
 source :rubygems
 
 gem "tinder", "1.7.0"
-gem "capybara", "1.1.1"
+gem "httparty", "0.8.1"
+gem "webistrano-resource"
 
 group :development do
   gem "rake"

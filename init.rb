@@ -9,8 +9,7 @@ require "bundler/setup"
 require "tinder"
 require "yaml"
 require "logger"
-require 'capybara'
-require 'capybara/dsl'
+require "webistrano-resource"
 
 # own stuff
 require 'dibot'
